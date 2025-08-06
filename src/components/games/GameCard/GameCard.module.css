@@ -1,0 +1,450 @@
+.gameCardExtra {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  width: 318px;
+  height: 279.291px;
+}
+
+.imageGrid {
+  grid-template-columns: max-content;
+  grid-template-rows: max-content;
+  display: inline-grid;
+  line-height: 0;
+  place-items: start;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.gameImage {
+  grid-area: 1 / 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 205.291px;
+  margin-left: 0;
+  margin-top: 0;
+  border-radius: 20px;
+  width: 318px;
+}
+
+.hdBadge {
+  grid-area: 1 / 1;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 4.773px;
+  height: 21.714px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+  margin-top: 10px;
+  opacity: 0.7;
+  padding: 0;
+  position: relative;
+  border-radius: 3px;
+  width: 32px;
+  z-index: 10;
+}
+
+.hdBadgeContent {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #222226;
+  font-size: 12.8px;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.hdBadgeContent p {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.moreButtonContainer {
+  grid-area: 1 / 1;
+  grid-template-columns: max-content;
+  grid-template-rows: max-content;
+  display: inline-grid;
+  margin-left: 268.109px;
+  margin-top: 7.939px;
+  place-items: start;
+  position: relative;
+  z-index: 10;
+}
+
+.moreButtonBg {
+  grid-area: 1 / 1;
+  margin-left: 0;
+  margin-top: 0;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.moreButtonBg img {
+  display: block;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+}
+
+.moreButton {
+  grid-area: 1 / 1;
+  margin-left: 9.9px;
+  margin-top: 9.9px;
+  overflow: hidden;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moreIcon {
+  position: relative;
+  width: 20px;
+  height: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moreIconUnion {
+  position: relative;
+  height: 5px;
+  width: 20px;
+}
+
+.moreIconUnion img {
+  display: block;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+}
+
+.ballerCamLogo {
+  grid-area: 1 / 1;
+  height: 15.062px;
+  margin-left: 225px;
+  margin-top: 178px;
+  opacity: 0.7;
+  overflow: hidden;
+  position: relative;
+  width: 85px;
+  z-index: 10;
+}
+
+.logoContainer {
+  position: absolute;
+  top: 4.7%;
+  right: 0.75%;
+  bottom: 4.51%;
+  left: 0.83%;
+}
+
+.logoContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoImage {
+  flex: none;
+  height: 13.676px;
+  transform: scaleY(-100%);
+  width: 83.656px;
+}
+
+.logoImage img {
+  display: block;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+}
+
+.durationBadge {
+  grid-area: 1 / 1;
+  backdrop-filter: blur(43.846px);
+  background-color: rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 26.395px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 8.853px;
+  margin-top: 170.098px;
+  padding: 6px;
+  position: relative;
+  border-radius: 4.399px;
+  width: 61.099px;
+  z-index: 10;
+}
+
+.durationContent {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 2.933px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.durationText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.durationText p {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.cardContent {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.teamsSection {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 73px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.teamContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.teamsWrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 318px;
+}
+
+.teamRow {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 28px;
+}
+
+.teamInfo {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 262px;
+}
+
+.colorIndicatorFrame {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 26px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  width: 5px;
+}
+
+.teamColorIndicator {
+  flex-basis: 0;
+  flex-grow: 1;
+  height: 100%;
+  min-height: 1px;
+  min-width: 1px;
+  position: relative;
+  border-radius: 100px;
+  flex-shrink: 0;
+  border: 0.5px solid #ffffff;
+}
+
+.teamName {
+  font-family: 'BentonSans Comp Black', sans-serif;
+  line-height: 1;
+  font-style: normal;
+  position: relative;
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: left;
+  text-transform: uppercase;
+  width: 220px;
+}
+
+.teamName p {
+  display: block;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.teamScoreContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: 28px;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2px;
+  position: relative;
+  border-radius: 3px;
+  flex-shrink: 0;
+  width: 48px;
+}
+
+.teamScore {
+  display: flex;
+  flex-direction: column;
+  font-family: 'BentonSans Comp Black', sans-serif;
+  height: 24px;
+  justify-content: center;
+  line-height: 1;
+  font-style: normal;
+  position: relative;
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 24px;
+  text-align: center;
+  width: 43px;
+}
+
+.teamScore p {
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+.penaltyScore {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.gameDetails {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  gap: 8px;
+  height: 51px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  line-height: 0;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.gameDate {
+  flex-basis: 0;
+  font-family: 'Inter', sans-serif;
+  flex-grow: 1;
+  min-height: 1px;
+  min-width: 1px;
+  font-style: normal;
+  position: relative;
+  flex-shrink: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.84);
+  width: 100%;
+  font-weight: 500;
+}
+
+.gameDate p {
+  display: block;
+  line-height: 1.3;
+}
+
+.penaltyText {
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  flex-grow: 1;
+  font-style: italic;
+  justify-content: center;
+  min-height: 1px;
+  min-width: 1px;
+  position: relative;
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 14px;
+  width: 100%;
+}
+
+.penaltyText p {
+  display: block;
+  line-height: 1.3;
+}

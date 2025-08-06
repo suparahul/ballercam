@@ -1,0 +1,104 @@
+.gameScheduleItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: 120px;
+  width: 100%;
+  position: relative;
+}
+
+.gameScheduleItem::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.date {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  line-height: 1;
+}
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 65px;
+  justify-content: center;
+}
+
+.teamRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.teamInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.teamColor {
+  width: 5px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  border: 0.5px solid var(--color-border-white);
+  flex-shrink: 0;
+}
+
+.teamName {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  line-height: 1;
+  flex: 1;
+}
+
+/* Mobile responsive styles for horizontal scrolling */
+@media (max-width: 768px) {
+  .gameScheduleItem {
+    flex-shrink: 0;
+    width: 280px;
+    height: 100px;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  
+  .gameScheduleItem::after {
+    display: none;
+  }
+  
+  .date {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .teams {
+    height: auto;
+    gap: 4px;
+  }
+  
+  .teamName {
+    font-size: var(--font-size-lg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .teamColor {
+    width: 4px;
+    height: 20px;
+  }
+} 

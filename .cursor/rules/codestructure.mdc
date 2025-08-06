@@ -1,0 +1,409 @@
+---
+alwaysApply: true
+---
+
+# Component Development Workflow
+
+Welcome to the project! This guide outlines the process for creating new React components and modifying existing ones. Following these steps will help maintain a clean, consistent, and scalable codebase.
+
+## Project Structure Overview
+
+Our project uses Vite for a fast development experience. Key folders related to component development are:
+
+-   `src/`: Contains all our source code.
+    -   `assets/`: This folder is designated for static assets like images (JPG, PNG, SVG), fonts, icons and any other media files that are imported directly into your components or CSS. Only add assets that need to be bundled along with the application.
+    -   `components/`: **This is where all our React components live.** It's further organized by component type or feature:
+        -   `common/`: Houses highly reusable UI elements that can be used across different parts of the application. Examples include buttons, input fields, modals, icons, and loading spinners. These components are typically generic and don't have business logic tied to a specific feature.
+        -   `layout/`: Contains components that define the overall structure and layout of the application, such as the Navbar, Footer, Sidebar, and main content containers. These components help organize how pages are displayed.
+        -   `[feature-or-category]/`: For components that are specific to a particular feature (e.g., `UserProfile/`, `ProductGrid/`) or a category of UI elements. This helps in modularizing the codebase and makes it easier to locate feature-specific UI.
+    -   `context/` (previously `contexts/`): Holds React Context API providers and related hooks. Context is used for managing global state or state that needs to be shared across multiple components without prop drilling (e.g., theme context, user authentication context).
+    -   `hooks/`: Contains custom React Hooks. These are reusable functions that encapsulate component logic, allowing you to extract stateful logic from components so it can be tested independently and reused. Examples include hooks for data fetching, form handling, or interacting with browser APIs.
+    -   `pages/`: This directory includes top-level components that correspond to different routes or views in the application. Each file typically represents a distinct page (e.g., `HomePage.tsx`, `ProfilePage.tsx`). These components often compose various smaller components from the `components/` directory.
+    -   `services/`: Contains modules responsible for API interactions and other external data fetching logic. This typically includes functions that make HTTP requests to a backend, abstracting away the data fetching details from the components. This where our `DataSource` class will be added.
+    -   `styles/`: This folder centralizes global styling concerns.
+        -   `global.css`: Contains global styles, CSS resets (like `normalize.css` or a custom reset) to ensure consistent rendering across browsers, and CSS Custom Property (variable) definitions. These variables are typically derived from `theme.ts`.
+        -   `theme.ts`: Defines our design tokens (colors, fonts, spacing, breakpoints, etc.) as a JavaScript/TypeScript object. This acts as the single source of truth for the visual design language of the application.
+    -   `utils/`: A collection of utility functions that can be used throughout the application. These are typically pure functions that perform common tasks like date formatting, string manipulation, data validation, or other helper operations not specific to React components or business logic.
+    -   `App.tsx`: The main application component. This component usually sets up routing, global context providers, and the overall structure of the application.
+    -   `main.tsx`: The entry point of the application. This file is responsible for rendering the root React component (`App.tsx`) into the DOM. It's also where global styles and configurations are often imported.
+    -   `vite-env.d.ts`: TypeScript declaration file for Vite-specific environment variables.
+-   `public/`: For static assets that are not processed by Vite's build pipeline (e.g., `favicon.ico`, `robots.txt`). Files in this directory are copied to the root of the build output as-is.
+-   `index.html`: The main HTML file. For Vite projects, this is typically located in the project root, not within `public/` (though it references assets from `public/`). Vite uses it as the entry point during development and build.
+-   `vite.config.ts`: Vite configuration file. This is where you customize Vite's behavior, including plugins, build options, and server settings.
+
+## Our Design System: `theme.ts` and `global.css`
+
+We have a centralized design system to ensure visual consistency:
+
+1.  **`src/styles/theme.ts`**:
+    * This file exports a JavaScript object (`theme`) containing all our design tokens:
+        * `colors`: Primary, secondary, accent, background, text colors, etc.
+        * `fonts`: Font families for primary text and headings.
+        * `fontSizes`: Standardized font sizes (sm, md, lg, etc.).
+        * `spacing`: Standardized spacing units (sm, md, lg, etc.).
+        * `radii`: Border radius values.
+        * `shadows`: Box shadow definitions.
+    * **This file is your reference for design values.**
+
+2.  **`src/styles/global.css`**:
+    * **Imports fonts** (e.g., from Google Fonts).
+    * Includes a **CSS reset** for consistent styling across browsers.
+    * **Defines CSS Custom Properties (variables)** in the `:root` scope. These variables (e.g., `var(--color-primary)`, `var(--font-size-md)`) are derived from the values in `theme.ts`.
+    * Sets up **base `body` styles** and other global defaults.
+    * This file is imported once in `src/main.tsx` to make these global styles and variables available everywhere.
+
+## Setting Up Fonts and Color Themes
+
+Our project uses a two-step process for defining and applying fonts and color themes globally:
+
+1.  **Define Tokens in `theme.ts`**:
+    *   All core design tokens (colors, font families, font sizes, spacing units, etc.) are defined as a JavaScript object in `src/styles/theme.ts`. This file acts as the single source of truth for your design language.
+    *   **Example: Adding a new color scheme in `theme.ts`**:
+        ```typescript
+        // src/styles/theme.ts
+        export const theme = {
+          colors: {
+            primary: '#007bff',
+            secondary: '#6c757d',
+            success: '#28a745',
+            danger: '#dc3545',
+            warning: '#ffc107',
+            info: '#17a2b8',
+            light: '#f8f9fa',
+            dark: '#343a40',
+            // Add your new color
+            specialAccent: '#ff69b4', // Hot Pink
+          },
+          fonts: {
+            body: 'Roboto, sans-serif',
+            heading: 'Montserrat, sans-serif',
+          },
+          fontSizes: {
+            xs: '0.75rem', // 12px
+            sm: '0.875rem', // 14px
+            md: '1rem',     // 16px
+            lg: '1.25rem',  // 20px
+            xl: '1.5rem',   // 24px
+          },
+          // ... other tokens like spacing, radii, shadows
+        };
+        ```
+
+2.  **Create CSS Custom Properties in `global.css`**:
+    *   The tokens defined in `theme.ts` are then used to create CSS Custom Properties (CSS Variables) in `src/styles/global.css` within the `:root` scope. This makes them accessible in all your CSS Module files.
+    *   **Importing Fonts**: If you're using custom web fonts (e.g., from Google Fonts), import them at the top of `global.css`.
+    *   **Example: Creating CSS variables and importing fonts in `global.css`**:
+        ```css
+        /* src/styles/global.css */
+        /* Import Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap');
+
+        :root {
+          /* Colors from theme.ts */
+          --color-primary: #007bff; /* Directly from theme.colors.primary */
+          --color-secondary: #6c757d;
+          --color-success: #28a745;
+          --color-danger: #dc3545;
+          --color-warning: #ffc107;
+          --color-info: #17a2b8;
+          --color-light: #f8f9fa;
+          --color-dark: #343a40;
+          --color-special-accent: #ff69b4; /* New color from theme.colors.specialAccent */
+
+          /* Fonts from theme.ts */
+          --font-body: 'Roboto', sans-serif;
+          --font-heading: 'Montserrat', sans-serif;
+
+          /* Font Sizes from theme.ts */
+          --font-size-xs: 0.75rem;
+          --font-size-sm: 0.875rem;
+          --font-size-md: 1rem;
+          --font-size-lg: 1.25rem;
+          --font-size-xl: 1.5rem;
+
+          /* Define other variables for spacing, radii, shadows etc. */
+          --spacing-sm: 8px;
+          --spacing-md: 16px;
+          --radius-md: 8px;
+          --shadow-small: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Basic Reset */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: var(--font-body);
+          font-size: var(--font-size-md);
+          background-color: var(--color-light);
+          color: var(--color-dark);
+          line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          font-family: var(--font-heading);
+          color: var(--color-primary);
+        }
+        ```
+    *   **Note**: While you can manually copy values from `theme.ts` to `global.css` as shown above, for larger projects, you might consider a script or a CSS-in-JS pre-processing step to automatically generate these CSS variables from `theme.ts` to avoid duplication and ensure consistency. However, for many projects, manual synchronization is manageable.
+
+3.  **Use CSS Variables in Components**:
+    *   Once defined in `global.css`, you can use these variables in any of your component-specific `.module.css` files.
+    *   Example:
+        ```css
+        /* src/components/MyComponent/MyComponent.module.css */
+        .myComponent {
+          background-color: var(--color-special-accent);
+          padding: var(--spacing-md);
+          font-family: var(--font-body);
+        }
+
+        .myComponentTitle {
+          color: var(--color-primary);
+          font-size: var(--font-size-lg);
+          font-family: var(--font-heading);
+        }
+        ```
+
+This approach ensures that your application's look and feel are consistent and easy to update. Changing a value in `theme.ts` and the corresponding CSS variable in `global.css` will propagate the change throughout the entire application.
+
+## Creating a New Component
+
+Follow these steps to create a new, well-structured component:
+
+1.  **Determine Component Category:**
+    * Is it a highly reusable UI primitive like a card or a button or a form element? Place it in `src/components/common/`.
+    * Is it a layout element like a header or a footer or a sidebar? Place it in `src/components/layout/`.
+    * Is it specific to a feature or a type of UI element (like a specialised card specific to a certain use case)? Create or use an appropriate subfolder, e.g., `src/components/<feature_name>/`.
+
+2.  **Create Component Folder:**
+    * Inside the chosen category, create a new folder for your component, named in `PascalCase`.
+    * Example: `src/components/cards/NewTripCard/`
+
+3.  **Create Component Files:**
+    * Inside the new folder (`NewTripCard/`), create the following files:
+        * `NewTripCard.tsx`: The React component file (logic and TSX).
+        * `NewTripCard.module.css`: The CSS Module for styling this specific component.
+        * `index.ts`: A "barrel" file for cleaner imports.
+
+4.  **Write the Barrel File (`index.ts`):**
+    * This file simply re-exports the default export from your component file.
+    * Doesn't do much, just ensures that the imports in other files are clean and easy to understand.
+    * Content of `src/components/cards/NewTripCard/index.ts`:
+        ```javascript
+        export { default } from './NewTripCard';
+        ```
+
+5.  **Write the Component TSX (`NewTripCard.tsx`):**
+    * Define your functional component.
+    * Import the CSS Module.
+    * Use descriptive prop names.
+    * Structure your TSX clearly.
+    * Example:
+        ```tsx
+        import React from 'react';
+        import styles from './NewTripCard.module.css'; // Import CSS Module
+
+        const NewTripCard = ({ title, description, imageUrl }) => {
+          return (
+            <div className={styles.cardContainer}>
+              {imageUrl && <img src={imageUrl} alt={title} className={styles.cardImage} />}
+              <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{title}</h3>
+                <p className={styles.cardDescription}>{description}</p>
+              </div>
+            </div>
+          );
+        };
+
+        export default NewTripCard;
+        ```
+
+6.  **Write the Component Styles (`NewTripCard.module.css`):**
+    * Define your CSS rules. Class names in CSS Modules are locally scoped, so you don't need to worry about global collisions.
+    * **Crucially, use the CSS variables defined in `src/styles/global.css` for all theme-related values (colors, fonts, spacing, etc.).**
+    * Example:
+        ```css
+        /* src/components/cards/NewTripCard/NewTripCard.module.css */
+        .cardContainer {
+          background-color: var(--color-background);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          padding: var(--spacing-md);
+          box-shadow: var(--shadow-small);
+          max-width: 300px;
+        }
+
+        .cardImage {
+          width: 100%;
+          height: auto;
+          border-radius: var(--radius-sm);
+          margin-bottom: var(--spacing-sm);
+        }
+
+        .cardTitle {
+          font-family: var(--font-heading);
+          font-size: var(--font-size-lg);
+          color: var(--color-primary);
+          margin-bottom: var(--spacing-xs);
+        }
+
+        .cardDescription {
+          font-size: var(--font-size-md);
+          color: var(--color-text);
+          line-height: 1.6;
+        }
+        ```
+
+7.  **Import and Use Your Component:**
+    * Thanks to the barrel file, you can import it cleanly:
+        ```tsx
+        import NewTripCard from './components/cards/NewTripCard';
+
+        // ... in another component or page
+        <NewTripCard title="My Awesome Trip" description="Details here..." />
+        ```
+
+## Modifying an Existing Component
+
+1.  **Locate the Component:** Find the component's folder within `src/components/`.
+2.  **Understand its Structure:**
+    * Open `ComponentName.tsx` to see its props, state (if any), and TSX structure.
+    * Open `ComponentName.module.css` to see its existing styles.
+3.  **Make TSX Changes:** Modify `ComponentName.tsx` as needed.
+4.  **Make Style Changes:**
+    * Modify `ComponentName.module.css`.
+    * **Always try to use existing theme variables (`var(--variable-name)`) first.**
+    * If a new color, font size, or spacing unit is genuinely needed and will be reused, consider if it should be added to `theme.ts` and then to `global.css` as a new variable. Discuss this with the team lead if unsure.
+    * Avoid adding one-off, hardcoded values if a theme variable can be used or created.
+
+## Styling Best Practices
+
+* **CSS Modules are Standard:** Use `.module.css` files for all component-specific styles. This provides local scoping by default.
+* **Leverage Theme Variables:** Always use the CSS variables (e.g., `var(--color-primary)`) defined in `global.css`. This ensures consistency and makes theme updates easy. Refer to `theme.ts` to see available tokens.
+* **Avoid Inline Styles:** Only use inline styles (`style={{ color: 'red' }}`) for highly dynamic styles that depend on JavaScript state and cannot be easily achieved with classes. For most cases, prefer adding/removing classes.
+* **Keep Styles Co-located:** Styles for a component should live in its own `.module.css` file within the component's folder.
+* **Global Styles are Minimal:** `global.css` is for truly global things (resets, base typography, CSS variable definitions). Don't put component-specific styles there.
+
+By following these guidelines, we can build a robust and maintainable React application. If you have any questions, don't hesitate to ask!
+
+
+## Routing with React Router (v6)
+
+React Router is used to handle navigation and display different pages or views within our single-page application.
+
+**1. Core Setup (typically in `src/main.tsx`):**
+* **Define Routes:** We use `createBrowserRouter` to define an array of route objects. Each route object typically has:
+    * `path`: The URL path (e.g., `/`, `/about`, `/products/:productId`).
+    * `element`: The React component to render for that path (e.g., `<HomePage />`).
+    * `children`: (Optional) An array of nested route objects.
+* **Layouts:** Often, a root route (`path: '/'`) will have a layout component (e.g., `<RootLayout />`) as its `element`. This layout component will contain shared UI (like a navbar and footer) and an `<Outlet />` component.
+* **`<Outlet />`:** This component (from `react-router-dom`) is used within layout routes to render their child route's element.
+* **`<RouterProvider />`:** The router configuration created by `createBrowserRouter` is passed to the `<RouterProvider />` component, which wraps our application in `src/main.tsx`.
+
+   **Example Snippet (`src/main.tsx`):**
+   ```tsx
+   import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+   // ... import your page and layout components
+   
+   const router = createBrowserRouter([
+     {
+       path: '/',
+       element: <RootLayout />, // RootLayout contains <Outlet />
+       children: [
+         { index: true, element: <HomePage /> },
+         { path: 'about', element: <AboutPage /> },
+         { path: 'items/:itemId', element: <ItemDetailsPage /> },
+       ],
+     },
+   ]);
+   
+   ReactDOM.createRoot(document.getElementById('root')).render(
+     <React.StrictMode>
+       <RouterProvider router={router} />
+     </React.StrictMode>
+   );
+   ```
+
+**2. Navigating Between Pages:**
+* **`<Link>` Component:** For declarative navigation (like HTML `<a>` tags).
+    ```tsx
+    import { Link } from 'react-router-dom';
+    
+    <Link to="/about">About Us</Link>
+    <Link to={`/items/${itemId}`}>View Item</Link>
+    ```
+* **`useNavigate` Hook:** For programmatic navigation (e.g., after a form submission or an API call).
+    ```tsx
+    import { useNavigate } from 'react-router-dom';
+    
+    const MyComponent = () => {
+      const navigate = useNavigate();
+      const handleSubmit = () => {
+        // ... form logic ...
+        navigate('/success');
+      };
+      // ...
+    };
+    ```
+
+**3. Accessing URL Parameters:**
+* For dynamic routes like `/items/:itemId`, use the `useParams` hook to get the value of `itemId`.
+    ```tsx
+    import { useParams } from 'react-router-dom';
+    
+    const ItemDetailsPage = () => {
+      const { itemId } = useParams(); // itemId will contain the value from the URL
+      return <div>Details for item: {itemId}</div>;
+    };
+    ```
+
+**4. Further Reading:**
+For more advanced features and detailed explanations, refer to the [official React Router documentation](https://reactrouter.com/).
+
+## Icons with Lucide React
+
+Lucide React provides a simple way to use a beautiful and extensive set of SVG icons.
+
+**1. Finding Icons:**
+* Browse and search for icons on the official Lucide website: [lucide.dev](https://lucide.dev/).
+* Note the PascalCase name of the icon you want (e.g., `Home`, `ShoppingCart`, `ArrowRight`).
+
+**2. Usage:**
+* Import the icon(s) you need directly from the `lucide-react` package.
+* Render the imported icon as a React component.
+
+   **Example:**
+   ```tsx
+   import React from 'react';
+   import { Home, ShoppingCart, ArrowRight } from 'lucide-react';
+   
+   const MyDashboard = () => {
+     return (
+       <div>
+         <button>
+           <Home /> Go Home
+         </button>
+         <p>
+           Items in cart: <ShoppingCart size={24} color="blue" />
+         </p>
+         <a href="/next">
+           Next Step <ArrowRight strokeWidth={3} />
+         </a>
+       </div>
+     );
+   };
+   ```
+
+**3. Customization:**
+* **Props:** Common props include:
+    * `size={number}`: Sets width and height in pixels (e.g., `size={16}`).
+    * `color="string"`: Sets the stroke color (e.g., `color="red"`, `color="#007bff"`).
+    * `strokeWidth={number}`: Sets the stroke thickness (e.g., `strokeWidth={2.5}`).
+* **CSS `currentColor`:** By default, Lucide icons inherit the `color` CSS property of their parent text element. This is very useful for matching your theme. If you set `color: var(--color-primary)` on a button containing an icon, the icon will also adopt that primary color.
+
+**4. Tree-Shaking (Performance):**
+* Importing icons individually (e.g., `import { Home } from 'lucide-react';`) is recommended. This allows build tools like Vite to perform tree-shaking, ensuring only the icons you use are included in the final application bundle, keeping it lightweight.
