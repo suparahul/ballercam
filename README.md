@@ -1,69 +1,130 @@
-# React + TypeScript + Vite
+# BallerCam 🏈
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React application for sports game tracking and management. Built with TypeScript, Vite, and CSS Modules.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design**: Fully responsive layout that adapts to desktop, tablet, and mobile devices
+- **Game Management**: Track upcoming games, scores, and team information
+- **Modern UI**: Clean, professional interface with smooth animations
+- **Mobile-First**: Optimized for mobile devices with touch-friendly interactions
+- **TypeScript**: Full type safety and better development experience
 
-## Expanding the ESLint configuration
+## 🚀 Quick Start
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (v16 or higher)
+- npm or yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/suparahul/ballercam.git
+   cd ballercam
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:5173` (or the port shown in your terminal)
+
+## 📱 Responsive Features
+
+### Desktop (>1400px)
+- 3-column game cards grid
+- Sidebar with upcoming games widget
+- Full navigation menu
+
+### Large Screens (1200-1400px)
+- 2-column game cards grid
+- Sidebar with upcoming games widget
+
+### Medium Screens (900-1200px)
+- 2-column game cards grid
+- Sidebar with upcoming games widget
+
+### Small Screens (768-900px)
+- 1-column game cards grid
+- Sidebar with upcoming games widget
+
+### Mobile (<768px)
+- Stacked layout with upcoming games on top
+- Horizontal scrolling upcoming games widget
+- Hamburger menu navigation
+- Game cards in single column
+
+## 🛠️ Tech Stack
+
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **CSS Modules** - Scoped styling
+- **React Router** - Client-side routing
+- **Lucide React** - Icon library
+
+## 📁 Project Structure
+
+```
+src/
+├── assets/
+│   ├── images/          # Local image assets
+│   ├── images.ts        # Image imports
+│   └── images.d.ts      # TypeScript declarations
+├── components/
+│   ├── common/          # Reusable UI components
+│   ├── games/           # Game-related components
+│   └── layout/          # Layout components
+├── pages/               # Page components
+├── styles/
+│   ├── global.css       # Global styles and CSS variables
+│   └── theme.ts         # Design tokens
+└── utils/               # Utility functions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎨 Design System
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The application uses a centralized design system with:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **CSS Custom Properties** for consistent theming
+- **Design Tokens** in `theme.ts` for colors, spacing, fonts
+- **Responsive Breakpoints** for mobile-first design
+- **Component-Based Architecture** for reusability
+
+## 📦 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🔗 Links
+
+- **Live Demo**: [Coming Soon]
+- **Repository**: https://github.com/suparahul/ballercam
+- **Issues**: https://github.com/suparahul/ballercam/issues
+
+---
+
+Built with ❤️ using React and TypeScript
